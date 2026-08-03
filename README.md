@@ -4,3 +4,4 @@
 - 目前進度:
   - https://craftinginterpreters.com/parsing-expressions.html#the-parser-class
   - https://craftinginterpreters.com/parsing-expressions.html#syntax-errors
+  - https://craftinginterpreters.com/evaluating-expressions.html
