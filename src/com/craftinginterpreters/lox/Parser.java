@@ -19,24 +19,33 @@ public class Parser {
   private static class ParseError extends RuntimeException {}
   private final List<Token> tokens;
   private int current = 0;
+  private int traceDepth = 0;
 
   Parser(List<Token> tokens) {
     this.tokens = tokens;
   }
 
   Expr parse() {
+    traceEnter("parse");
     try {
-      return expression();
+      Expr result = expression();
+      traceExit("parse -> " + result.getClass().getSimpleName());
+      return result;
     } catch (ParseError error) {
+      traceExit("parse -> error");
       return null;
     }
   }
 
   private Expr expression() {
-    return equality();
+    traceEnter("expression");
+    Expr result = equality();
+    traceExit("expression");
+    return result;
   }
 
   private Expr equality() {
+    traceEnter("equality");
     Expr expr = comparison();
 
     while (match(BANG_EQUAL, EQUAL_EQUAL)) {
@@ -45,6 +54,7 @@ public class Parser {
       expr = new Expr.Binary(expr, operator, right);
     }
 
+    traceExit("equality");
     return expr;
   }
 
@@ -82,6 +92,7 @@ public class Parser {
   }
 
   private Expr comparison() {
+    traceEnter("comparison");
     Expr expr = term();
 
     while (match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL)) {
@@ -90,10 +101,12 @@ public class Parser {
       expr = new Expr.Binary(expr, operator, right);
     }
 
+    traceExit("comparison");
     return expr;
   }
 
   private Expr term() {
+    traceEnter("term");
     Expr expr = factor();
 
     while (match(MINUS, PLUS)) {
@@ -102,10 +115,12 @@ public class Parser {
       expr = new Expr.Binary(expr, operator, right);
     }
 
+    traceExit("term");
     return expr;
   }
 
   private Expr factor() {
+    traceEnter("factor");
     Expr expr = unary();
 
     while (match(SLASH, STAR)) {
@@ -114,32 +129,55 @@ public class Parser {
       expr = new Expr.Binary(expr, operator, right);
     }
 
+    traceExit("factor");
     return expr;
   }
 
   private Expr unary() {
+    traceEnter("unary");
     if (match(BANG, MINUS)) {
       Token operator = previous();
       Expr right = unary();
-      return new Expr.Unary(operator, right);
+      Expr result = new Expr.Unary(operator, right);
+      traceExit("unary");
+      return result;
     }
 
-    return primary();
+    Expr result = primary();
+    traceExit("unary");
+    return result;
   }
 
   private Expr primary() {
-    if (match(FALSE)) return new Expr.Literal(false);
-    if (match(TRUE)) return new Expr.Literal(true);
-    if (match(NIL)) return new Expr.Literal(null);
+    traceEnter("primary");
+    if (match(FALSE)) {
+      Expr result = new Expr.Literal(false);
+      traceExit("primary");
+      return result;
+    }
+    if (match(TRUE)) {
+      Expr result = new Expr.Literal(true);
+      traceExit("primary");
+      return result;
+    }
+    if (match(NIL)) {
+      Expr result = new Expr.Literal(null);
+      traceExit("primary");
+      return result;
+    }
 
     if (match(NUMBER, STRING)) {
-      return new Expr.Literal(previous().literal);
+      Expr result = new Expr.Literal(previous().literal);
+      traceExit("primary");
+      return result;
     }
 
     if (match(LEFT_PAREN)) {
       Expr expr = expression();
       consume(RIGHT_PAREN, "Expect ')' after expression.");
-      return new Expr.Grouping(expr);
+      Expr result = new Expr.Grouping(expr);
+      traceExit("primary");
+      return result;
     }
 
     throw error(peek(), "Expect expression.");
@@ -154,6 +192,16 @@ public class Parser {
   private ParseError error(Token token, String message) {
     Lox.error(token, message);
     return new ParseError();
+  }
+
+  private void traceEnter(String function) {
+    System.out.println("  ".repeat(traceDepth) + "> " + function + " | next = " + peek());
+    traceDepth++;
+  }
+
+  private void traceExit(String function) {
+    traceDepth--;
+    System.out.println("  ".repeat(traceDepth) + "< " + function + " | next = " + peek());
   }
 
   private void synchronize() {
