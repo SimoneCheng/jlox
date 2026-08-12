@@ -187,6 +187,6 @@ public class Scanner {
         String text = source.substring(start, current);
         TokenType type = keywords.get(text);
         if (type == null) type = IDENTIFIER;
-        addToken(IDENTIFIER);
+        addToken(type);
     }
 }
