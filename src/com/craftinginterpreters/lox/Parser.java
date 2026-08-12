@@ -17,6 +17,7 @@ primary        → NUMBER | STRING | "true" | "false" | "nil"
 
 public class Parser {
   private static class ParseError extends RuntimeException {}
+  private static final boolean SHOW_TRACE = false;
   private final List<Token> tokens;
   private int current = 0;
   private int traceDepth = 0;
@@ -195,13 +196,17 @@ public class Parser {
   }
 
   private void traceEnter(String function) {
-    System.out.println("  ".repeat(traceDepth) + "> " + function + " | next = " + peek());
-    traceDepth++;
+    if (SHOW_TRACE) {
+      System.out.println("  ".repeat(traceDepth) + "> " + function + " | next = " + peek());
+      traceDepth++;
+    }
   }
 
   private void traceExit(String function) {
-    traceDepth--;
-    System.out.println("  ".repeat(traceDepth) + "< " + function + " | next = " + peek());
+    if (SHOW_TRACE) {
+      traceDepth--;
+      System.out.println("  ".repeat(traceDepth) + "< " + function + " | next = " + peek());
+    }
   }
 
   private void synchronize() {
