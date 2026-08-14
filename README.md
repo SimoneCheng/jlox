@@ -9,3 +9,4 @@
   - https://craftinginterpreters.com/evaluating-expressions.html#truthiness-and-falsiness
   - https://craftinginterpreters.com/evaluating-expressions.html#evaluating-binary-operators
   - https://craftinginterpreters.com/evaluating-expressions.html#runtime-errors
+  - https://craftinginterpreters.com/statements-and-state.html
