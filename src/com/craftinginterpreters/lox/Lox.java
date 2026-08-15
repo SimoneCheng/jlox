@@ -48,12 +48,13 @@ public class Lox {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        List<Stmt> statements = parser.parse();
 
         // Stop if there was a syntax error.
-        interpreter.interpret(expression);
+        interpreter.interpret(statements);
 
-        System.out.println(new AstPrinter().print(expression));
+        // TODO: 需要擴充成可以印出 statements 的 AST 結構
+        // System.out.println(new AstPrinter().print(statements));
     }
 
     static void error(int line, String message) {
