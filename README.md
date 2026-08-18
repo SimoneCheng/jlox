@@ -15,6 +15,7 @@
 - https://craftinginterpreters.com/evaluating-expressions.html#runtime-errors
 - https://craftinginterpreters.com/statements-and-state.html
 - https://craftinginterpreters.com/statements-and-state.html#global-variables
+- https://craftinginterpreters.com/statements-and-state.html#parsing-variables
 
 ## Extensions and Challenges
 
