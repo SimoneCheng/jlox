@@ -38,10 +38,32 @@ public class Parser {
     traceEnter("parse");
     List<Stmt> statements = new java.util.ArrayList<>();
     while (!isAtEnd()) {
-      statements.add(statement());
+      statements.add(declaration());
     }
     traceExit("parse");
     return statements;
+  }
+
+  private Stmt declaration() {
+    try {
+      if (match(VAR)) return varDeclaration();
+      return statement();
+    } catch (ParseError error) {
+      synchronize();
+      return null;
+    }
+  }
+
+  private Stmt varDeclaration() {
+    Token name = consume(IDENTIFIER, "Expect variable name.");
+
+    Expr initializer = null;
+    if (match(EQUAL)) {
+      initializer = expression();
+    }
+
+    consume(SEMICOLON, "Expect ';' after variable declararion.");
+    return new Stmt.Var(name, initializer);
   }
 
   private Stmt statement() {
@@ -202,6 +224,9 @@ public class Parser {
       Expr result = new Expr.Grouping(expr);
       traceExit("primary");
       return result;
+    }
+    if (match(IDENTIFIER)) {
+      return new Expr.Variable(previous());
     }
 
     throw error(peek(), "Expect expression.");

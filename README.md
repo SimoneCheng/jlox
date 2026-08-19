@@ -16,6 +16,7 @@
 - https://craftinginterpreters.com/statements-and-state.html
 - https://craftinginterpreters.com/statements-and-state.html#global-variables
 - https://craftinginterpreters.com/statements-and-state.html#parsing-variables
+- https://craftinginterpreters.com/statements-and-state.html#environments
 
 ## Extensions and Challenges
 
@@ -30,3 +31,4 @@
 ## Notes
 
 - [Static and Dynamic Typing](./notes/static-dynamic-typing.md)
+- [Error Recovery with Synchronize](./notes/error-recovery-with-synchronize.md)
