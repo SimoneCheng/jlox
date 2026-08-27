@@ -17,6 +17,9 @@
 - https://craftinginterpreters.com/statements-and-state.html#global-variables
 - https://craftinginterpreters.com/statements-and-state.html#parsing-variables
 - https://craftinginterpreters.com/statements-and-state.html#environments
+- https://craftinginterpreters.com/statements-and-state.html#interpreting-global-variables
+- https://craftinginterpreters.com/statements-and-state.html#assignment
+- https://craftinginterpreters.com/statements-and-state.html#assignment-syntax
 
 ## Extensions and Challenges
 

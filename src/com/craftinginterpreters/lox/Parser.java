@@ -11,7 +11,8 @@ varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
 statement      → exprStmt | printStmt ;
 exprStmt       → expression ";" ;
 printStmt      → "print" expression ";" ;
-expression     → equality ;
+expression     → assignment ;
+assignment     → IDENTIFIER "=" assignment | equality ;
 equality       → comparison ( ( "!=" | "==" ) comparison )* ;
 comparison     → term ( ( ">" | ">=" | "<" | "<=" ) term )* ;
 term           → factor ( ( "-" | "+" ) factor )* ;
@@ -85,9 +86,8 @@ public class Parser {
 
   private Expr expression() {
     traceEnter("expression");
-    Expr result = equality();
     traceExit("expression");
-    return result;
+    return assignment();
   }
 
   private Expr equality() {

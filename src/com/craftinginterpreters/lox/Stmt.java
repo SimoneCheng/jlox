@@ -36,9 +36,9 @@ abstract class Stmt {
   }
 
   static class Var extends Stmt {
-    Var(Token name, Expr initialier) {
+    Var(Token name, Expr initializer) {
       this.name = name;
-      this.initialier = initialier;
+      this.initializer = initializer;
     }
 
     @Override
@@ -47,7 +47,7 @@ abstract class Stmt {
     }
 
     final Token name;
-    final Expr initialier;
+    final Expr initializer;
   }
 
   abstract <R> R accept(Visitor<R> visitor);
