@@ -90,6 +90,27 @@ public class Parser {
     return assignment();
   }
 
+  private Expr assignment() {
+    traceEnter("assignment");
+    Expr expr = equality();
+
+    if (match(EQUAL)) {
+      Token equals = previous();
+      Expr value = assignment();
+
+      if (expr instanceof Expr.Variable) {
+        Token name = ((Expr.Variable)expr).name;
+        traceExit("assignment");
+        return new Expr.Assign(name, value);
+      }
+
+      error(equals, "Invalid assignment target.");
+    }
+
+    traceExit("assignment");
+    return expr;
+  }
+
   private Expr equality() {
     traceEnter("equality");
     Expr expr = comparison();

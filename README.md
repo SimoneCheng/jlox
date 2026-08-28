@@ -20,6 +20,8 @@
 - https://craftinginterpreters.com/statements-and-state.html#interpreting-global-variables
 - https://craftinginterpreters.com/statements-and-state.html#assignment
 - https://craftinginterpreters.com/statements-and-state.html#assignment-syntax
+- https://craftinginterpreters.com/statements-and-state.html#scope
+- https://craftinginterpreters.com/statements-and-state.html#nesting-and-shadowing
 
 ## Extensions and Challenges
 
