@@ -22,6 +22,7 @@
 - https://craftinginterpreters.com/statements-and-state.html#assignment-syntax
 - https://craftinginterpreters.com/statements-and-state.html#scope
 - https://craftinginterpreters.com/statements-and-state.html#nesting-and-shadowing
+- https://craftinginterpreters.com/statements-and-state.html#block-syntax-and-semantics
 
 ## Extensions and Challenges
 
@@ -37,3 +38,4 @@
 
 - [Static and Dynamic Typing](./notes/static-dynamic-typing.md)
 - [Error Recovery with Synchronize](./notes/error-recovery-with-synchronize.md)
+- [Recursive Descent Grammar 的層級、解析順序與 Syntax / Semantics](./notes/recursive-descent-grammar.md)

@@ -183,4 +183,18 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     // Unreachable.
     return null;
   }
+
+  @Override
+  public Void visitBlockStmt(Stmt.Block stmt) {
+    Environment previous = this.environment;
+    try {
+      this.environment = new Environment(previous);
+      for (Stmt statement : stmt.statements) {
+        statement.accept(this);
+      }
+    } finally {
+      this.environment = previous;
+    }
+    return null;
+  }
 }
