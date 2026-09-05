@@ -29,6 +29,7 @@ public class Parser {
   private static class ParseError extends RuntimeException {}
   private static final boolean SHOW_TRACE = false;
   private final List<Token> tokens;
+  private boolean reportErrors = true;
   private int current = 0;
   private int traceDepth = 0;
 
@@ -38,12 +39,27 @@ public class Parser {
 
   List<Stmt> parse() {
     traceEnter("parse");
+    reportErrors = true;
     List<Stmt> statements = new java.util.ArrayList<>();
     while (!isAtEnd()) {
       statements.add(declaration());
     }
     traceExit("parse");
     return statements;
+  }
+
+  Expr parseExpression() {
+    reportErrors = false;
+    try {
+      Expr expr = expression();
+      if (isAtEnd()) {
+        return expr;
+      } else {
+        return null;
+      }
+    } catch (ParseError error) {
+      return null;
+    }
   }
 
   private Stmt declaration() {
@@ -271,7 +287,9 @@ public class Parser {
   }
 
   private ParseError error(Token token, String message) {
-    Lox.error(token, message);
+    if (reportErrors) {
+      Lox.error(token, message);
+    }
     return new ParseError();
   }
 
