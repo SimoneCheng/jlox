@@ -63,7 +63,7 @@ exprStmt → expression ";"
 
 ---
 
-# 1. Parser 原本只有 Program Entry Point
+## 1. Parser 原本只有 Program Entry Point
 
 原本 Parser 的主要入口：
 
@@ -135,7 +135,7 @@ consume(SEMICOLON)
 
 ---
 
-# 2. 為 Parser 增加 Expression Entry Point
+## 2. 為 Parser 增加 Expression Entry Point
 
 Parser 本來就已經有：
 
@@ -189,7 +189,7 @@ Parser
 
 ---
 
-# 3. Expression 必須吃完整份輸入
+## 3. Expression 必須吃完整份輸入
 
 如果 `parseExpression()` 只有：
 
@@ -259,7 +259,7 @@ expression EOF
 
 ---
 
-# 4. REPL 先嘗試 Expression，再嘗試 Program
+## 4. REPL 先嘗試 Expression，再嘗試 Program
 
 REPL 可以採用兩階段解析：
 
@@ -334,7 +334,7 @@ printStatement()
 
 ---
 
-# 5. 為什麼需要重新建立 Parser？
+## 5. 為什麼需要重新建立 Parser？
 
 Parser 裡有：
 
@@ -386,7 +386,7 @@ current = 0
 
 ---
 
-# 6. 最大的問題：ParseError 不能當成真正的 Syntax Error
+## 6. 最大的問題：ParseError 不能當成真正的 Syntax Error
 
 原本 Parser 的：
 
@@ -470,7 +470,7 @@ expression parser 失敗
 
 ---
 
-# 7. 為什麼一開始 `print` 和 `var` 都不能正常執行？
+## 7. 為什麼一開始 `print` 和 `var` 都不能正常執行？
 
 一開始 expression probe 失敗時仍然呼叫：
 
@@ -538,7 +538,7 @@ Undefined variable 'a'.
 
 ---
 
-# 8. Silent Expression Probe
+## 8. Silent Expression Probe
 
 因此 expression probe 必須是 **silent** 的。
 
@@ -640,7 +640,7 @@ environment.define("a", 1)
 
 ---
 
-# 9. ParseError 和真正的 Error Reporting 是不同概念
+## 9. ParseError 和真正的 Error Reporting 是不同概念
 
 這次實作讓 `ParseError` 的角色變得很清楚。
 
@@ -690,7 +690,7 @@ ParseError
 
 ---
 
-# 10. 和 Panic Mode / Error Recovery 的關係
+## 10. 和 Panic Mode / Error Recovery 的關係
 
 前面 parser 章節有做 error recovery。
 
@@ -798,7 +798,7 @@ REPL probe 則是：
 
 ---
 
-# 11. Interpreter 本來就已經會 Evaluate Expression
+## 11. Interpreter 本來就已經會 Evaluate Expression
 
 Interpreter 中原本就有：
 
@@ -868,7 +868,7 @@ Expr
 
 ---
 
-# 12. Expression Statement 和 REPL Expression 的差異
+## 12. Expression Statement 和 REPL Expression 的差異
 
 正常程式：
 
@@ -940,7 +940,7 @@ REPL 裸 Expression
 
 ---
 
-# 13. 最後的 REPL Parsing 流程
+## 13. 最後的 REPL Parsing 流程
 
 完成後可以整理成：
 
@@ -1020,7 +1020,7 @@ true
 
 ---
 
-# 核心整理
+## 核心整理
 
 這個 challenge 最重要的不是修改 expression grammar，而是：
 

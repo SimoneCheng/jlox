@@ -213,7 +213,7 @@ term() 再處理：
 
 ---
 
-## 3. 「越下面優先順序越高」只適用於 expression precedence grammar
+### 3. 「越下面優先順序越高」只適用於 expression precedence grammar
 
 像：
 
@@ -303,7 +303,7 @@ factor → unary ( ("/" | "*") unary )*
 
 ---
 
-## 4. 但 `program`、`statement`、`block` 不是 operator precedence
+### 4. 但 `program`、`statement`、`block` 不是 operator precedence
 
 例如：
 
@@ -386,7 +386,7 @@ Program
 
 ---
 
-## 5. 那 grammar 的層級還是需要設計正確嗎？
+### 5. 那 grammar 的層級還是需要設計正確嗎？
 
 需要。
 
@@ -495,7 +495,7 @@ block
 
 ---
 
-## 6. 所以「grammar 要按照解析順序排」嗎？
+### 6. 所以「grammar 要按照解析順序排」嗎？
 
 比較精確的說法不是：
 
@@ -560,11 +560,11 @@ expression()
 
 ---
 
-## 7. 兩種「往下」其實代表不同的事情
+### 7. 兩種「往下」其實代表不同的事情
 
 因此目前的 grammar 可以大致分成兩部分。
 
-### Program structure
+#### Program structure
 
 ```text
 program
@@ -596,7 +596,7 @@ Expression
 
 ---
 
-### Expression precedence
+#### Expression precedence
 
 ```text
 expression
@@ -644,7 +644,7 @@ operator binding 越緊
 
 ---
 
-# Syntax 和 Semantics
+### 8. Syntax 和 Semantics
 
 這裡也可以順便區分兩個很容易混在一起的概念：
 
@@ -660,9 +660,7 @@ Semantics
 
 > **Semantics：這樣寫「代表什麼意思」。**
 
----
-
-## Syntax
+#### Syntax
 
 Syntax 是 grammar 主要負責描述的東西。
 
@@ -714,9 +712,7 @@ factor
 Syntax Error
 ```
 
----
-
-## Semantics
+#### Semantics
 
 但是有些程式：
 
@@ -772,9 +768,7 @@ Syntax：合法
 Semantics：不合法
 ```
 
----
-
-## 另一個例子：變數
+#### 另一個例子：變數
 
 ```lox
 a = 3;
@@ -818,9 +812,7 @@ IDENTIFIER "=" expression
 
 這需要語言後面的 semantic processing 才知道。
 
----
-
-## 可以把整個流程想成
+#### 可以把整個流程想成
 
 ```text
 Source Code
@@ -861,7 +853,7 @@ Interpreter：
 
 ---
 
-# 核心整理
+### 9. 核心整理
 
 Recursive descent parser 可以想成：
 
