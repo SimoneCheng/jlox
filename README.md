@@ -36,6 +36,6 @@
 
 ## Notes
 
-- [Static and Dynamic Typing](./notes/static-dynamic-typing.md)
-- [Error Recovery with Synchronize](./notes/error-recovery-with-synchronize.md)
-- [Recursive Descent Grammar 的層級、解析順序與 Syntax / Semantics](./notes/recursive-descent-grammar.md)
+- [Static and Dynamic Typing](./notes/ch7-static-dynamic-typing.md)
+- [Error Recovery with Synchronize](./notes/ch8-error-recovery-with-synchronize.md)
+- [Recursive Descent Grammar 的層級、解析順序與 Syntax / Semantics](./notes/ch8-recursive-descent-grammar.md)
