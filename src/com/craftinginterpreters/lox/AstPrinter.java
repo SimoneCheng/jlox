@@ -1,8 +1,19 @@
 package com.craftinginterpreters.lox;
 
-public class AstPrinter implements Expr.Visitor<String> {
+import java.util.List;
+
+public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
     String print(Expr expr) {
         return expr.accept(this);
+    }
+
+    String print(List<Stmt> statements) {
+        StringBuilder builder = new StringBuilder();
+        for (Stmt statement : statements) {
+            builder.append(statement.accept(this));
+            builder.append("\n");
+        }
+        return builder.toString();
     }
 
     @Override
@@ -24,6 +35,46 @@ public class AstPrinter implements Expr.Visitor<String> {
     @Override
     public String visitUnaryExpr(Expr.Unary expr) {
         return parenthesize(expr.operator.lexeme, expr.right);
+    }
+
+    @Override
+    public String visitVariableExpr(Expr.Variable expr) {
+        return expr.name.lexeme;
+    }
+
+    @Override
+    public String visitAssignExpr(Expr.Assign expr) {
+        return parenthesize(expr.name.lexeme, expr.value);
+    }
+
+    @Override
+    public String visitExpressionStmt(Stmt.Expression stmt) {
+        return parenthesize("expr-stmt", stmt.expression);
+    }
+
+    @Override
+    public String visitPrintStmt(Stmt.Print stmt) {
+        return parenthesize("print", stmt.expression);
+    }
+
+    @Override
+    public String visitVarStmt(Stmt.Var stmt) {
+        if (stmt.initializer != null) {
+            return parenthesize("var " + stmt.name.lexeme, stmt.initializer);
+        }
+        return parenthesize("var " + stmt.name.lexeme);
+    }
+
+    @Override
+    public String visitBlockStmt(Stmt.Block stmt) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("(block");
+        for (Stmt statement : stmt.statements) {
+            builder.append(" ");
+            builder.append(statement.accept(this));
+        }
+        builder.append(")");
+        return builder.toString();
     }
 
     private String parenthesize(String name, Expr... exprs) {
