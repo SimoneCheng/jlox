@@ -4,7 +4,7 @@
 
 [Crafting Interpreters](https://craftinginterpreters.com/contents.html)
 
-## 目前進度
+## Current Reading Status
 
 - https://craftinginterpreters.com/parsing-expressions.html#the-parser-class
 - https://craftinginterpreters.com/parsing-expressions.html#syntax-errors
@@ -23,16 +23,22 @@
 - https://craftinginterpreters.com/statements-and-state.html#scope
 - https://craftinginterpreters.com/statements-and-state.html#nesting-and-shadowing
 - https://craftinginterpreters.com/statements-and-state.html#block-syntax-and-semantics
+- https://craftinginterpreters.com/control-flow.html#conditional-execution
+- https://craftinginterpreters.com/control-flow.html#logical-operators
 
 ## Extensions and Challenges
 
 ### Chapter 7: Evaluating Expressions
-- Allowed string concatenation when either operand is a string.
-- Added division-by-zero runtime errors.
-- Supported string comparison operators.
+- [x] Allowed string concatenation when either operand is a string.
+- [x] Added division-by-zero runtime errors.
+- [x] Supported string comparison operators.
 
 ### Chapter 8: Statements and State
-- Extended `AstPrinter` to print statement nodes.
+- [x] Extended `AstPrinter` to print statement nodes.
+
+### Chapter 9: Control Flow
+- [ ] Extended `AstPrinter` to if statement nodes.
+- [ ] Added multiline statement support to the REPL by buffering incomplete input.
 
 ## Notes
 
