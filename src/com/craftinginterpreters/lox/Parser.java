@@ -10,6 +10,8 @@ declaration    → varDecl | statement;
 varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
 statement      → exprStmt | printStmt | block;
 block          → "{" declaration* "}" ;
+ifStmt         → "if" "(" expression ")" statement
+                 ( "else" statement )? ;
 exprStmt       → expression ";" ;
 printStmt      → "print" expression ";" ;
 expression     → assignment ;
@@ -21,7 +23,7 @@ factor         → unary ( ( "/" | "*" ) unary )* ;
 unary          → ( "!" | "-" ) unary
                | primary ;
 primary        → NUMBER | STRING | "true" | "false" | "nil"
-               | "(" expression ")" 
+               | "(" expression ")"
                | IDENTIFIER;
 */
 
@@ -85,9 +87,24 @@ public class Parser {
   }
 
   private Stmt statement() {
+    if (match(IF)) return ifStatement();
     if (match(PRINT)) return printStatement();
     if (match(LEFT_BRACE)) return new Stmt.Block(block());
     return expressionStatement();
+  }
+
+  private Stmt ifStatement() {
+    consume(LEFT_PAREN, "Expect '(' after if condition.");
+    Expr condition = expression();
+    consume(RIGHT_PAREN, "Expect ')' after if condition.");
+
+    Stmt thenBranch = statement();
+    Stmt elseBranch = null;
+    if (match(ELSE)) {
+      elseBranch = statement();
+    }
+
+    return new Stmt.If(condition, thenBranch, elseBranch);
   }
 
   private Stmt printStatement() {

@@ -103,6 +103,16 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   }
 
   @Override
+  public Void visitIfStmt(Stmt.If stmt) {
+    if (isTruthy(evaluate(stmt.condition))) {
+      stmt.thenBranch.accept(this);
+    } else if (stmt.elseBranch != null) {
+      stmt.elseBranch.accept(this);
+    }
+    return null;
+  }
+
+  @Override
   public Void visitPrintStmt(Stmt.Print stmt) {
     Object value = evaluate(stmt.expression);
     System.out.println(stringify(value));
