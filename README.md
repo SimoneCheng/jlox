@@ -1,18 +1,25 @@
 # jlox
 
 ## Book
-
 [Crafting Interpreters](https://craftinginterpreters.com/contents.html)
+
+## GitHub
+https://github.com/munificent/craftinginterpreters
 
 ## Current Reading Status
 
+### Chapter 6: Parsing Expressions
 - https://craftinginterpreters.com/parsing-expressions.html#the-parser-class
 - https://craftinginterpreters.com/parsing-expressions.html#syntax-errors
+
+### Chapter 7: Evaluating Expressions
 - https://craftinginterpreters.com/evaluating-expressions.html
 - https://craftinginterpreters.com/evaluating-expressions.html#evaluating-unary-expressions
 - https://craftinginterpreters.com/evaluating-expressions.html#truthiness-and-falsiness
 - https://craftinginterpreters.com/evaluating-expressions.html#evaluating-binary-operators
 - https://craftinginterpreters.com/evaluating-expressions.html#runtime-errors
+
+### Chapter 8: Statements and State
 - https://craftinginterpreters.com/statements-and-state.html
 - https://craftinginterpreters.com/statements-and-state.html#global-variables
 - https://craftinginterpreters.com/statements-and-state.html#parsing-variables
@@ -23,8 +30,11 @@
 - https://craftinginterpreters.com/statements-and-state.html#scope
 - https://craftinginterpreters.com/statements-and-state.html#nesting-and-shadowing
 - https://craftinginterpreters.com/statements-and-state.html#block-syntax-and-semantics
+
+### Chapter 9: Control Flow
 - https://craftinginterpreters.com/control-flow.html#conditional-execution
 - https://craftinginterpreters.com/control-flow.html#logical-operators
+- https://craftinginterpreters.com/control-flow.html#while-loops
 
 ## Extensions and Challenges
 

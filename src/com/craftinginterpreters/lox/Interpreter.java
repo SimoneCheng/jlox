@@ -30,6 +30,25 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
   }
 
   @Override
+  public Object visitLogicalExpr(Expr.Logical expr) {
+    Object left = evaluate(expr.left);
+
+    if (expr.operator.type == TokenType.OR) {
+      // 處理 OR 的 short circuit
+      if (isTruthy(left)) {
+        return left;
+      }
+    } else {
+      // 處理 AND 的 short circuit
+      if (!isTruthy(left)) {
+        return left;
+      }
+    }
+
+    return evaluate(expr.right);
+  }
+
+  @Override
   public Object visitGroupingExpr(Expr.Grouping expr) {
     return evaluate(expr.expression);
   }
