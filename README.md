@@ -35,6 +35,7 @@ https://github.com/munificent/craftinginterpreters
 - https://craftinginterpreters.com/control-flow.html#conditional-execution
 - https://craftinginterpreters.com/control-flow.html#logical-operators
 - https://craftinginterpreters.com/control-flow.html#while-loops
+- https://craftinginterpreters.com/control-flow.html#for-loops
 
 ## Extensions and Challenges
 
