@@ -18,12 +18,12 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
 
     @Override
     public String visitBinaryExpr(Expr.Binary expr) {
-        return parenthesize(expr.operator.lexeme, expr.left, expr.right);
+        return parenthesizeExpr(expr.operator.lexeme, expr.left, expr.right);
     }
 
     @Override
     public String visitGroupingExpr(Expr.Grouping expr) {
-        return parenthesize("group", expr.expression);
+        return parenthesizeExpr("group", expr.expression);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
 
     @Override
     public String visitUnaryExpr(Expr.Unary expr) {
-        return parenthesize(expr.operator.lexeme, expr.right);
+        return parenthesizeExpr(expr.operator.lexeme, expr.right);
     }
 
     @Override
@@ -44,40 +44,83 @@ public class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
 
     @Override
     public String visitAssignExpr(Expr.Assign expr) {
-        return parenthesize(expr.name.lexeme, expr.value);
+        return parenthesizeExpr(expr.name.lexeme, expr.value);
+    }
+
+    @Override
+    public String visitLogicalExpr(Expr.Logical expr) {
+        return parenthesizeExpr(expr.operator.lexeme, expr.left, expr.right);
     }
 
     @Override
     public String visitExpressionStmt(Stmt.Expression stmt) {
-        return parenthesize("expr-stmt", stmt.expression);
+        return parenthesizeExpr("expr-stmt", stmt.expression);
     }
 
     @Override
     public String visitPrintStmt(Stmt.Print stmt) {
-        return parenthesize("print", stmt.expression);
+        return parenthesizeExpr("print", stmt.expression);
     }
 
     @Override
     public String visitVarStmt(Stmt.Var stmt) {
         if (stmt.initializer != null) {
-            return parenthesize("var " + stmt.name.lexeme, stmt.initializer);
+            return parenthesizeExpr("var " + stmt.name.lexeme, stmt.initializer);
         }
-        return parenthesize("var " + stmt.name.lexeme);
+        return parenthesizeExpr("var " + stmt.name.lexeme);
+    }
+
+    @Override
+    public String visitIfStmt(Stmt.If stmt) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("(if");
+        builder.append(" ");
+        builder.append(stmt.condition.accept(this));
+        builder.append(" ");
+        builder.append(parenthesizeStmt("then", stmt.thenBranch));
+        if (stmt.elseBranch != null) {
+            builder.append(" ");
+            builder.append(parenthesizeStmt("else", stmt.elseBranch));
+        }
+        builder.append(")");
+
+        return builder.toString();
+    }
+
+    @Override
+    public String visitWhileStmt(Stmt.While stmt) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("(while");
+        builder.append(" ");
+        builder.append(stmt.condition.accept(this));
+        builder.append(" ");
+        builder.append(stmt.body.accept(this));
+        builder.append(")");
+
+        return builder.toString();
     }
 
     @Override
     public String visitBlockStmt(Stmt.Block stmt) {
+        return parenthesizeStmt("block", stmt.statements.toArray(Stmt[]::new));
+    }
+
+    private String parenthesizeStmt(String name, Stmt... statements) {
         StringBuilder builder = new StringBuilder();
-        builder.append("(block");
-        for (Stmt statement : stmt.statements) {
+
+        builder.append("(").append(name);
+        for (Stmt statement : statements) {
             builder.append(" ");
             builder.append(statement.accept(this));
         }
         builder.append(")");
+
         return builder.toString();
     }
 
-    private String parenthesize(String name, Expr... exprs) {
+    private String parenthesizeExpr(String name, Expr... exprs) {
         StringBuilder builder = new StringBuilder();
 
         builder.append("(").append(name);

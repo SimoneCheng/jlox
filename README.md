@@ -48,7 +48,7 @@ https://github.com/munificent/craftinginterpreters
 - [x] Extended `AstPrinter` to print statement nodes.
 
 ### Chapter 9: Control Flow
-- [ ] Extended `AstPrinter` to if statement nodes.
+- [x] Extended `AstPrinter` to if statement nodes.
 - [ ] Added multiline statement support to the REPL by buffering incomplete input.
 - [ ] Explained how conditional execution can be implemented using first-class functions and dynamic dispatch without built-in branching statements. Identified a language that uses this technique. (Conceptual exercise; no implementation required)
 - [ ] Explained how iteration can be implemented using recursion with tail call optimization. Identified a language that uses this technique. (Conceptual exercise; no implementation required)
