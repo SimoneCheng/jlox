@@ -1,6 +1,7 @@
 package com.craftinginterpreters.lox;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import static com.craftinginterpreters.lox.TokenType.*;
 
@@ -8,11 +9,14 @@ import static com.craftinginterpreters.lox.TokenType.*;
 program        → statement* EOF ;
 declaration    → varDecl | statement;
 varDecl        → "var" IDENTIFIER ( "=" expression )? ";" ;
-statement      → exprStmt | printStmt | block;
+statement      → exprStmt | printStmt | block | ifStmt | whileStmt | forStmt;
 block          → "{" declaration* "}" ;
 whileStmt      → "while" "(" expression ")" statement ;
 ifStmt         → "if" "(" expression ")" statement
                  ( "else" statement )? ;
+forStmt        → "for" "(" ( varDecl | exprStmt | ";" )
+                 expression? ";"
+                 expression? ")" statement ;
 exprStmt       → expression ";" ;
 printStmt      → "print" expression ";" ;
 expression     → assignment ;
@@ -90,11 +94,50 @@ public class Parser {
   }
 
   private Stmt statement() {
+    if (match(FOR)) return forStatement();
     if (match(IF)) return ifStatement();
     if (match(PRINT)) return printStatement();
     if (match(WHILE)) return whileStatement();
     if (match(LEFT_BRACE)) return new Stmt.Block(block());
     return expressionStatement();
+  }
+
+  private Stmt forStatement() {
+    consume(LEFT_PAREN, "Expect '(' after 'for'.");
+
+    Stmt initialier;
+    if (match(SEMICOLON)) {
+      initialier = null;
+    } else if (match(VAR)) {
+      initialier = varDeclaration();
+    } else {
+      initialier = expressionStatement();
+    }
+
+    Expr condition = null;
+    if (!check(SEMICOLON)) {
+      condition = expression();
+    }
+    consume(SEMICOLON, "Expect ';' after loop condition.");
+
+    Expr increment = null;
+    if (!check(RIGHT_PAREN)) {
+      increment = expression();
+    }
+    consume(RIGHT_PAREN, "Expect ')' after for clauses.");
+
+    Stmt body = statement();
+    if (increment != null) {
+      body = new Stmt.Block(
+        Arrays.asList(body, new Stmt.Expression(increment))
+      );
+    }
+    if (condition == null) condition = new Expr.Literal(true);
+    body = new Stmt.While(condition, body);
+    if (initialier != null) {
+      body = new Stmt.Block(Arrays.asList(initialier, body));
+    }
+    return body;
   }
 
   private Stmt ifStatement() {
